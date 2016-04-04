@@ -1,4 +1,6 @@
-# HTTP2 w/ Spring Boot + Undertow (Stripped-down footprint)
+# HTTP2 w/ Spring Boot + Jetty (Stripped-down footprint)
+
+Jetty registration based on [blog post by Jeroen van Wilgenburg](https://vanwilgenburg.wordpress.com/2016/04/01/spring-boot-http2/).
 
 ## Running from gradle
 
@@ -66,3 +68,4 @@ Go [https://localhost:8443](https://localhost:8443)
 
 * http://undertow.io/blog/2015/03/26/HTTP2-In-Wildfly.html
 * https://github.com/spring-projects/spring-boot/tree/master/spring-boot-samples/spring-boot-sample-undertow-ssl
+* https://vanwilgenburg.wordpress.com/2016/04/01/spring-boot-http2/
