@@ -9,7 +9,7 @@ Jetty registration based on [blog post by Jeroen van Wilgenburg](https://vanwilg
 ## Creating and running uber-jar
 
     $ ./gradlew build
-    $ java -Xbootclasspath/p:./lib/alpn-boot-8.1.6.v20151105.jar -jar build/libs/demo-0.0.1-SNAPSHOT.jar
+    $ java -Xbootclasspath/p:./lib/alpn-boot-8.1.7.v20160121.jar -jar build/libs/demo-0.0.1-SNAPSHOT.jar
 
 
 Go [https://localhost:8443](https://localhost:8443)
