@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        springBootVersion = '1.3.3.RELEASE'
-        alpnBootVersion   = '8.1.7.v20160121'
+        springBootVersion = '1.3.4.RELEASE'
+        alpnAgentVersion  = '2.0.2'
         jettyVersion      = '9.3.8.v20160314'
     }
 
@@ -33,7 +33,7 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 configurations {
-    jvmBoot { description "additional libs on jvm bootclasspath" }
+    javaAgent { description "additional lib as jvm agent" }
 }
 
 dependencyManagement {
@@ -61,29 +61,29 @@ dependencies {
     }
 
     // ALPN
-    compile("org.mortbay.jetty.alpn:alpn-boot:${alpnBootVersion}")
-    jvmBoot("org.mortbay.jetty.alpn:alpn-boot:${alpnBootVersion}")
+    compile("org.mortbay.jetty.alpn:jetty-alpn-agent:${alpnAgentVersion}")
+    javaAgent("org.mortbay.jetty.alpn:jetty-alpn-agent:${alpnAgentVersion}")
 }
 
 defaultTasks 'bootRun'
 mainClassName = 'demo.DemoHttp2Application'
-applicationDefaultJvmArgs = ["-Xbootclasspath/p:lib/alpn-boot-${alpnBootVersion}.jar"]
+applicationDefaultJvmArgs = ["-javaagent:lib/jetty-alpn-agent-${alpnAgentVersion}.jar"]
 
 distributions {
     main.contents {
-        from(configurations.jvmBoot) {
+        from(configurations.javaAgent) {
             into "lib"
         }
     }
 }
 
-task copyAlpnBootJar (type:Copy) {
-    from (configurations.jvmBoot)
+task copyAlpnAgentJar (type:Copy) {
+    from (configurations.javaAgent)
     into("lib")
 }
 
-tasks["eclipse"].dependsOn(copyAlpnBootJar)
-processResources.dependsOn copyAlpnBootJar
+tasks["eclipse"].dependsOn(copyAlpnAgentJar)
+processResources.dependsOn copyAlpnAgentJar
 
 clean {
     delete "lib/*.jar"
