@@ -13,6 +13,9 @@
     $ ./gradlew build
     $ java -javaagent:lib/jetty-alpn-agent-2.0.3.jar -jar build/libs/demo-0.0.1-SNAPSHOT.jar
 
+.. or more easily:
+
+    $ ./gradlew bootRun
 
 Go [https://localhost:8443](https://localhost:8443)
 
