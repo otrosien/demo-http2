@@ -39,7 +39,6 @@ configurations {
 dependencyManagement {
     imports {
         ext['jetty.version'] = "${jettyVersion}"
-        mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
     }
 }
 
