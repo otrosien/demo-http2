@@ -1,8 +1,8 @@
 buildscript {
     ext {
-        springBootVersion = '1.3.4.RELEASE'
-        alpnAgentVersion  = '2.0.2'
-        jettyVersion      = '9.3.8.v20160314'
+        springBootVersion = '1.3.5.RELEASE'
+        alpnAgentVersion  = '2.0.3'
+        jettyVersion      = '9.3.9.v20160517'
     }
 
     repositories {
