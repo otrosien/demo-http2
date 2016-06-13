@@ -1,6 +1,8 @@
-# HTTP2 w/ Spring Boot + Jetty (Stripped-down footprint)
+# HTTP2 w/ Spring Boot + Jetty
 
-Jetty registration based on [blog post by Jeroen van Wilgenburg](https://vanwilgenburg.wordpress.com/2016/04/01/spring-boot-http2/).
+* Based on [HTTP2 w/ Spring Boot + Undertow](https://github.com/making/demo-http2)
+* Jetty registration based on [blog post by Jeroen van Wilgenburg](https://vanwilgenburg.wordpress.com/2016/04/01/spring-boot-http2/).
+* Replaced pure alpn-boot mechanism with [Jetty ALPN Agent](https://github.com/jetty-project/jetty-alpn-agent) wrapper, that loads the correct ALPN Boot library, depending on your JRE.
 
 ## Running directly from gradle
 
@@ -9,7 +11,7 @@ Jetty registration based on [blog post by Jeroen van Wilgenburg](https://vanwilg
 ## Creating and running uber-jar
 
     $ ./gradlew build
-    $ java -javaagent:lib/jetty-alpn-agent-2.0.2.jar -jar build/libs/demo-0.0.1-SNAPSHOT.jar
+    $ java -javaagent:lib/jetty-alpn-agent-2.0.3.jar -jar build/libs/demo-0.0.1-SNAPSHOT.jar
 
 
 Go [https://localhost:8443](https://localhost:8443)
