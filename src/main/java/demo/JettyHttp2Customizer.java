@@ -66,7 +66,7 @@ public class JettyHttp2Customizer implements EmbeddedServletContainerCustomizer 
             private ConnectionFactory[] createConnectionFactories(SslContextFactory sslContextFactory,
                                                                   HttpConfiguration httpConfiguration) {
 
-            	NegotiatingServerConnectionFactory.checkProtocolNegotiationAvailable();
+                NegotiatingServerConnectionFactory.checkProtocolNegotiationAvailable();
 
                 SslConnectionFactory sslConnectionFactory = new SslConnectionFactory(sslContextFactory, "alpn");
                 ALPNServerConnectionFactory alpnServerConnectionFactory =
