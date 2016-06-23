@@ -1,13 +1,13 @@
 package demo;
 
+import org.eclipse.jetty.servlets.PushCacheFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Configuration
 @EnableAutoConfiguration
@@ -19,20 +19,13 @@ public class DemoHttp2Application {
 
     @Bean
     public EmbeddedServletContainerCustomizer jettyHttp2Customizer(ServerProperties serverProperties) {
-    	return new JettyHttp2Customizer(serverProperties);
+        return new JettyHttp2Customizer(serverProperties);
     }
-    
+
     @Bean
-    public HelloController helloControllerBean() {
-        return new HelloController();
-    }
-}
-
-@RestController
-class HelloController {
-
-    @RequestMapping(path="/")
-    String hello() {
-        return "hello!";
+    public FilterRegistrationBean pushCacheFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new PushCacheFilter());
+        return registration;
     }
 }
