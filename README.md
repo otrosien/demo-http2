@@ -19,7 +19,7 @@ On the command-line it should finalize startup with these log lines.
 ...
 o.e.jetty.server.AbstractConnector       : Started ServerConnector@193dcfbe{SSL,[ssl, alpn, h2, h2-17, h2-16, h2-15, h2-14]}{0.0.0.0:8443}
 .s.b.c.e.j.JettyEmbeddedServletContainer : Jetty started on port(s) 8443 (ssl, alpn, h2, h2-17, h2-16, h2-15, h2-14)
-demo.DemoHttp2Application                : Started DemoHttp2Application in 5.997 seconds (JVM running for 6.448)
+demo.DemoHttp2Application                : Started DemoHttp2Application in 2.914 seconds (JVM running for 3.274)
 ```
 
 Go [https://localhost:8443](https://localhost:8443)
