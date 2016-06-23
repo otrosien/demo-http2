@@ -13,57 +13,68 @@
     $ ./gradlew build
     $ java -javaagent:lib/jetty-alpn-agent-2.0.3.jar -jar build/libs/demo-0.0.1-SNAPSHOT.jar
 
+On the command-line it should finalize startup with these log lines.
+
+```
+...
+o.e.jetty.server.AbstractConnector       : Started ServerConnector@193dcfbe{SSL,[ssl, alpn, h2, h2-17, h2-16, h2-15, h2-14]}{0.0.0.0:8443}
+.s.b.c.e.j.JettyEmbeddedServletContainer : Jetty started on port(s) 8443 (ssl, alpn, h2, h2-17, h2-16, h2-15, h2-14)
+demo.DemoHttp2Application                : Started DemoHttp2Application in 5.997 seconds (JVM running for 6.448)
+```
+
 Go [https://localhost:8443](https://localhost:8443)
 
+```
+$ curl --http2 -k -v https://localhost:8443
 
-    $ curl --http2 -k -v https://localhost:8443
-    * Rebuilt URL to: https://localhost:8443/
-    *   Trying ::1...
-    * Connected to localhost (::1) port 8443 (#0)
-    * ALPN, offering h2
-    * ALPN, offering http/1.1
-    * Cipher selection: ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH
-    * successfully set certificate verify locations:
-    *   CAfile: /usr/local/etc/openssl/cert.pem
-      CApath: none
-    * TLSv1.2 (OUT), TLS header, Certificate Status (22):
-    * TLSv1.2 (OUT), TLS handshake, Client hello (1):
-    * TLSv1.2 (IN), TLS handshake, Server hello (2):
-    * TLSv1.2 (IN), TLS handshake, Certificate (11):
-    * TLSv1.2 (IN), TLS handshake, Server key exchange (12):
-    * TLSv1.2 (IN), TLS handshake, Server finished (14):
-    * TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
-    * TLSv1.2 (OUT), TLS change cipher, Client hello (1):
-    * TLSv1.2 (OUT), TLS handshake, Finished (20):
-    * TLSv1.2 (IN), TLS change cipher, Client hello (1):
-    * TLSv1.2 (IN), TLS handshake, Finished (20):
-    * SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
-    * ALPN, server accepted to use h2
-    * Server certificate:
-    * 	 subject: C=Unknown; ST=Unknown; L=Unknown; O=Unknown; OU=Unknown; CN=localhost
-    * 	 start date: 2014-07-23 19:48:43 GMT
-    * 	 expire date: 2014-10-21 19:48:43 GMT
-    * 	 issuer: C=Unknown; ST=Unknown; L=Unknown; O=Unknown; OU=Unknown; CN=localhost
-    * 	 SSL certificate verify result: self signed certificate (18), continuing anyway.
-    * Using HTTP2, server supports multi-use
-    * Connection state changed (HTTP/2 confirmed)
-    * Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
-    * Using Stream ID: 1 (easy handle 0x7fab0b002000)
-    > GET / HTTP/1.1
-    > Host: localhost:8443
-    > User-Agent: curl/7.44.0
-    > Accept: */*
-    > 
-    * http2_recv: 16384 bytes buffer at 0x7fab0b002930 (stream 1)
-    * http2_recv: 16384 bytes buffer at 0x7fab0b002930 (stream 1)
-    * http2_recv: 16384 bytes buffer at 0x7fab0b002930 (stream 1)
-    * http2_recv: returns 115 for stream 1
-    < HTTP/2.0 200
-    < content-type:text/plain;charset=UTF-8
-    < content-length:6
-    < date:Fri, 21 Aug 2015 14:19:52 GMT
-    < 
-    * Connection #0 to host localhost left intact
+* Rebuilt URL to: https://localhost:8443/
+*   Trying ::1...
+* Connected to localhost (::1) port 8443 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+* Cipher selection: ALL:!EXPORT:!EXPORT40:!EXPORT56:!aNULL:!LOW:!RC4:@STRENGTH
+* successfully set certificate verify locations:
+*   CAfile: /etc/pki/tls/certs/ca-bundle.crt
+  CApath: none
+* TLSv1.2 (OUT), TLS handshake, Client hello (1):
+* TLSv1.2 (IN), TLS handshake, Server hello (2):
+* TLSv1.2 (IN), TLS handshake, Certificate (11):
+* TLSv1.2 (IN), TLS handshake, Server key exchange (12):
+* TLSv1.2 (IN), TLS handshake, Server finished (14):
+* TLSv1.2 (OUT), TLS handshake, Client key exchange (16):
+* TLSv1.2 (OUT), TLS change cipher, Client hello (1):
+* TLSv1.2 (OUT), TLS handshake, Finished (20):
+* TLSv1.2 (IN), TLS change cipher, Client hello (1):
+* TLSv1.2 (IN), TLS handshake, Finished (20):
+* SSL connection using TLSv1.2 / ECDHE-RSA-AES128-GCM-SHA256
+* ALPN, server accepted to use h2
+* Server certificate:
+*  subject: C=Unknown; ST=Unknown; L=Unknown; O=Unknown; OU=Unknown; CN=Unknown
+*  start date: Apr  4 21:10:18 2016 GMT
+*  expire date: Jul  3 21:10:18 2016 GMT
+*  issuer: C=Unknown; ST=Unknown; L=Unknown; O=Unknown; OU=Unknown; CN=Unknown
+*  SSL certificate verify result: self signed certificate (18), continuing anyway.
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* TCP_NODELAY set
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* Using Stream ID: 1 (easy handle 0xb0c3c0)
+> GET / HTTP/1.1
+> Host: localhost:8443
+> User-Agent: curl/7.49.1
+> Accept: */*
+> 
+* Connection state changed (MAX_CONCURRENT_STREAMS updated)!
+* HTTP 1.0, assume close after body
+< HTTP/2 200 
+< server: Jetty(9.3.10.v20160621)
+< date: Thu, 23 Jun 2016 09:40:04 GMT
+< content-type: text/plain;charset=utf-8
+< content-length: 6
+< 
+* Closing connection 0
+* TLSv1.2 (OUT), TLS alert, Client hello (1):
+```
 
 ## Reference
 
