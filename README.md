@@ -1,3 +1,5 @@
+[ ![Build Status](https://travis-ci.org/otrosien/demo-http2.svg)](https://travis-ci.org/otrosien/demo-http2)
+
 # HTTP2 w/ Spring Boot + Jetty
 
 * Based on [HTTP2 w/ Spring Boot + Undertow](https://github.com/making/demo-http2)
