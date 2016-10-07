@@ -59,6 +59,8 @@ dependencies {
         exclude(module: 'commons-logging')
     }
 
+    testCompile 'com.squareup.okhttp3:okhttp:3.4.1'
+
     // ALPN
     compile("org.mortbay.jetty.alpn:jetty-alpn-agent:${alpnAgentVersion}")
     javaAgent("org.mortbay.jetty.alpn:jetty-alpn-agent:${alpnAgentVersion}")
@@ -67,6 +69,14 @@ dependencies {
 defaultTasks 'bootRun'
 mainClassName = 'demo.DemoHttp2Application'
 applicationDefaultJvmArgs = ["-javaagent:lib/jetty-alpn-agent-${alpnAgentVersion}.jar"]
+
+test {
+    systemProperty "javax.net.ssl.trustStoreType", "jks"
+    systemProperty "javax.net.ssl.trustStore", "src/main/resources/sample.jks"
+    systemProperty "javax.net.debug", "ssl"
+    systemProperty "javax.net.ssl.trustStorePassword", "changeit"
+    jvmArgs = ["-javaagent:lib/jetty-alpn-agent-${alpnAgentVersion}.jar"]
+}
 
 distributions {
     main.contents {
