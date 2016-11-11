@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = '1.4.1.RELEASE'
+        springBootVersion = '1.4.2.RELEASE'
         alpnAgentVersion  = '2.0.5'
         jettyVersion      = '9.3.14.v20161028'
     }
