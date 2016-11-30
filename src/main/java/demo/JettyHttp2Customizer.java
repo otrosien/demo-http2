@@ -2,6 +2,7 @@ package demo;
 
 import org.eclipse.jetty.alpn.server.ALPNServerConnectionFactory;
 import org.eclipse.jetty.http2.HTTP2Cipher;
+import org.eclipse.jetty.http2.server.HTTP2CServerConnectionFactory;
 import org.eclipse.jetty.http2.server.HTTP2ServerConnectionFactory;
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
@@ -40,18 +41,28 @@ public class JettyHttp2Customizer implements EmbeddedServletContainerCustomizer 
         factory.addServerCustomizers(new JettyServerCustomizer() {
             @Override
             public void customize(Server server) {
+                ServerConnector connector = (ServerConnector) server.getConnectors()[0];
+                int port = connector.getPort();
+                HttpConfiguration httpConfiguration = connector
+                        .getConnectionFactory(HttpConnectionFactory.class).getHttpConfiguration();
+
                 if (serverProperties.getSsl() != null && serverProperties.getSsl().isEnabled()) {
-                    ServerConnector connector = (ServerConnector) server.getConnectors()[0];
-                    int port = connector.getPort();
                     SslContextFactory sslContextFactory = connector
                             .getConnectionFactory(SslConnectionFactory.class).getSslContextFactory();
-                    HttpConfiguration httpConfiguration = connector
-                            .getConnectionFactory(HttpConnectionFactory.class).getHttpConfiguration();
 
                     configureSslContextFactory(sslContextFactory);
                     ConnectionFactory[] connectionFactories = createConnectionFactories(sslContextFactory, httpConfiguration);
 
                     ServerConnector serverConnector = new ServerConnector(server, connectionFactories);
+                    serverConnector.setPort(port);
+                    // override existing connectors with new ones
+                    server.setConnectors(new Connector[]{serverConnector});
+                } else {
+                    HTTP2CServerConnectionFactory h2cServerConnectionFactory = new HTTP2CServerConnectionFactory(httpConfiguration);
+                    HttpConnectionFactory h1ConnectionFactory = new HttpConnectionFactory(httpConfiguration);
+                    ServerConnector serverConnector = new ServerConnector(server, new ConnectionFactory[]{
+                            h1ConnectionFactory,
+                            h2cServerConnectionFactory});
                     serverConnector.setPort(port);
                     // override existing connectors with new ones
                     server.setConnectors(new Connector[]{serverConnector});
