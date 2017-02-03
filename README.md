@@ -13,7 +13,7 @@
 ## Or manually creating and running uber-jar
 
     $ ./gradlew build
-    $ java -javaagent:lib/jetty-alpn-agent-2.0.4.jar -jar build/libs/demo-0.0.1-SNAPSHOT.jar
+    $ java -javaagent:lib/jetty-alpn-agent-2.0.6.jar -jar build/libs/demo-0.0.1-SNAPSHOT.jar
 
 On the command-line it should finalize startup with these log lines.
 

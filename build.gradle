@@ -1,8 +1,8 @@
 buildscript {
     ext {
-        springBootVersion = '1.4.2.RELEASE'
-        alpnAgentVersion  = '2.0.5'
-        jettyVersion      = '9.3.14.v20161028'
+        springBootVersion = '1.5.1.RELEASE'
+        alpnAgentVersion  = '2.0.6'
+        jettyVersion      = '9.4.0.v20161208'
     }
 
     repositories {
@@ -21,7 +21,7 @@ plugins {
   id 'eclipse'
   id 'idea'
 }
-apply plugin: 'spring-boot'
+apply plugin: 'org.springframework.boot'
 
 
 group = 'org.test'
